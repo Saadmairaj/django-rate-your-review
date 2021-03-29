@@ -1,0 +1,31 @@
+{% extends 'review/base.html' %}
+{% load crispy_forms_tags %}
+{% load tags %}
+
+{% block title %}
+Histroy
+{% endblock %}
+
+{% block heading %}
+    <h3>Review Histroy</h3>
+{% endblock %}
+{% block content %}
+    {% for review in reviews %}
+        <a href=#>
+            <div class="card text-white bg-dark mb-3 w-100">
+                <div class="card-header">
+                    {{ review|star_template }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.title }}</h5>
+                    <p class="card-text">{% limit_text review.text 250 %}</p>
+                    <p class="card-text">
+                        <small class="text-muted">{{ review.last_updated|time_ago }}</small>
+                    </p>
+                </div>
+            </div>
+        </a>
+        <br>
+    {% endfor %}
+{% endblock %}
+

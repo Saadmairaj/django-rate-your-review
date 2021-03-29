@@ -1,0 +1,17 @@
+{% extends 'review/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock %}
+
+{% block heading %}
+    <h3>Login</h3>
+{% endblock %}
+{% block content %}
+    <form action="" method="post" class="form-group">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Login</button>
+        </div>
+    </form>
+{% endblock %}
