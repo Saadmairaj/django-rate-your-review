@@ -1,31 +1,61 @@
 {% extends 'review/base.html' %}
 {% load crispy_forms_tags %}
 {% load tags %}
+{% load static %}
 
-{% block title %}
-Histroy
-{% endblock %}
-
-{% block heading %}
-    <h3>Review Histroy</h3>
-{% endblock %}
+{% block title %}Histroy{% endblock %}
+{% block heading %}<h3>Review Histroy</h3>{% endblock %}
 {% block content %}
-    {% for review in reviews %}
-        <a href=#>
-            <div class="card text-white bg-dark mb-3 w-100">
-                <div class="card-header">
-                    {{ review|star_template }}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ review.title }}</h5>
-                    <p class="card-text">{% limit_text review.text 250 %}</p>
-                    <p class="card-text">
-                        <small class="text-muted">{{ review.last_updated|time_ago }}</small>
-                    </p>
-                </div>
+    <script src="{% static "js/jquery.waypoints.min.js" %}"></script>
+    <script src="{% static "js/infinite.min.js" %}"></script>
+    <script>
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            
+            offset: 'bottom-in-view',
+        })
+    </script>
+    <style>
+        .nounderline {
+            text-decoration: none !important
+        }
+    </style>
+    <div class="infinite-container">
+        {% for review in reviews %}
+            <div class="infinite-item">
+                <a class="card text-white bg-dark mb-3 w-100 nounderline" href="/update-review/{{ review.pk }}">
+                    <div class="card-header">
+                        {{ review|star_template }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review.title }}</h5>
+                        <p class="card-text">{% limit_text review.text 250 %}</p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ review.last_updated|time_ago }}</small>
+                        </p>
+                    </div>
+                </a>
             </div>
-        </a>
-        <br>
-    {% endfor %}
+            <br>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
 {% endblock %}
 
