@@ -92,6 +92,7 @@ class Histroy(ListView):
     fields = "__all__"
     template_name = 'review/history.html'
     context_object_name = 'reviews'
+    paginate_by = 20
 
     def get_queryset(self):
         query_set = self.model.objects.filter(
