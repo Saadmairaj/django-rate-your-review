@@ -1,17 +1,14 @@
 from datetime import datetime
-from django.contrib.auth.forms import UserCreationForm
-from django.db.models import query
-from django.shortcuts import render
-from .forms import ReviewForm, RegisterForm
-from .models import Review
-
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-
-from django.views.generic import CreateView, TemplateView, ListView, UpdateView
-from django.views.generic.edit import FormView
 from django.conf import settings
+from django.dispatch import receiver
+from django.views.generic.edit import FormView
+from django.db.models.signals import post_save
+from django.views.generic import ListView, UpdateView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from .models import Review
+from .forms import ReviewForm, RegisterForm
 
 # Tensorflow imports
 from tensorflow import keras
@@ -64,11 +61,13 @@ class ReviewView(FormView):
         return super().form_valid(form)
 
 
-class EditReviewView(UpdateView):
+class EditReviewView(LoginRequiredMixin, UpdateView):
     form_class = ReviewForm
     model = Review
     template_name = 'review/edit-review.html'
     success_url = "/update-review"
+    login_url = '/login'
+    redirect_field_name = "redirect_to"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -87,12 +86,14 @@ class EditReviewView(UpdateView):
         return url + ("/%s" % obj.pk)
 
 
-class Histroy(ListView):
+class Histroy(LoginRequiredMixin, ListView):
     model = Review
     fields = "__all__"
     template_name = 'review/history.html'
     context_object_name = 'reviews'
-    paginate_by = 20
+    paginate_by = 10
+    login_url = '/login'
+    redirect_field_name = "redirect_to"
 
     def get_queryset(self):
         query_set = self.model.objects.filter(
