@@ -53,7 +53,7 @@ def modify_word_index(word_index=None):
     return word_index
 
 
-def split_validation_data(*data, divmod=0.5):
+def split_validation_data(*data, _divmod=0.5):
     """Split the data into train and validation data from the given `divmod`."""
-    n = round((len(data[0]) - 1) * divmod)
+    n = round((len(data[0]) - 1) * _divmod)
     return [(d[n:], d[:n]) for d in data]
