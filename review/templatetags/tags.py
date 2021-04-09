@@ -25,11 +25,11 @@ def time_ago(dateTime):
     hours = (diff.total_seconds()/60)/60
     if diff.seconds < 60:
         return "Last updated %s secs ago" %str(round(diff.seconds))
-    elif minutes < 60:
+    if minutes < 60:
         return "Last updated %s mins ago" %str(round(minutes))
-    elif hours < 60:
+    if hours < 60:
         return "Last updated %s hrs ago" %str(round(hours))
-    return diff.days
+    return "Last updated %s days ago" %str(diff.days)
 
 @register.filter(is_safe=True)
 def star_template(rv):
