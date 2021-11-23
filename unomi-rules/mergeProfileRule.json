@@ -1,0 +1,50 @@
+{
+  "itemId": "mergeProfile",
+  "itemType": "rule",
+  "condition": {
+    "parameterValues": {
+      "subConditions": [
+        {
+          "parameterValues": {
+            "eventTypeId": "login"
+          },
+          "type": "eventTypeCondition"
+        },
+        {
+          "parameterValues": {
+            "eventTypeId": "register"
+          },
+          "type": "eventTypeCondition"
+        }
+      ],
+      "operator": "or"
+    },
+    "type": "booleanCondition"
+  },
+  "actions": [
+    {
+      "parameterValues": {
+        "mergeProfilePropertyValue": "eventProperty::properties(username)",
+        "mergeProfilePropertyName": "mergeIdentifier"
+      },
+      "type": "mergeProfilesOnPropertyAction"
+    }
+  ],
+  "linkedItems": null,
+  "raiseEventOnlyOnceForProfile": false,
+  "raiseEventOnlyOnceForSession": false,
+  "raiseEventOnlyOnce": false,
+  "priority": 0,
+  "metadata": {
+    "id": "mergeProfile",
+    "name": "Merge Profile",
+    "description": "Merge profiles with same email property of profile",
+    "scope": "ryr",
+    "tags": [],
+    "systemTags": [],
+    "enabled": true,
+    "missingPlugins": false,
+    "hidden": false,
+    "readOnly": false
+  }
+}

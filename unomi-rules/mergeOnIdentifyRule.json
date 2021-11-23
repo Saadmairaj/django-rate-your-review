@@ -1,0 +1,44 @@
+{
+  "itemId": "mergeProfileOnIdentify",
+  "itemType": "rule",
+  "condition": {
+    "parameterValues": {
+      "subConditions": [
+        {
+          "parameterValues": {
+            "eventTypeId": "identify"
+          },
+          "type": "eventTypeCondition"
+        }
+      ],
+      "operator": "and"
+    },
+    "type": "booleanCondition"
+  },
+  "actions": [
+    {
+      "parameterValues": {
+        "mergeProfilePropertyValue": "eventProperty::target.properties(username)",
+        "mergeProfilePropertyName": "mergeIdentifier"
+      },
+      "type": "mergeProfilesOnPropertyAction"
+    }
+  ],
+  "linkedItems": null,
+  "raiseEventOnlyOnceForProfile": false,
+  "raiseEventOnlyOnceForSession": false,
+  "raiseEventOnlyOnce": false,
+  "priority": 0,
+  "metadata": {
+    "id": "mergeProfileOnIdentify",
+    "name": "Merge Profile Identify",
+    "description": "Merge profiles with same username property of profile on identify",
+    "scope": "ryr",
+    "tags": [],
+    "systemTags": [],
+    "enabled": true,
+    "missingPlugins": false,
+    "hidden": false,
+    "readOnly": false
+  }
+}

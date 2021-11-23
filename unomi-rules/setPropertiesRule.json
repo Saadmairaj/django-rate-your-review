@@ -1,0 +1,82 @@
+{
+    "itemId": "setPropertyInfo",
+    "itemType": "rule",
+    "condition": {
+        "parameterValues": {
+            "subConditions": [
+                {
+                    "parameterValues": {
+                        "eventTypeId": "login"
+                    },
+                    "type": "eventTypeCondition"
+                },
+                {
+                    "parameterValues": {
+                        "eventTypeId": "register"
+                    },
+                    "type": "eventTypeCondition"
+                }
+            ],
+            "operator": "or"
+        },
+        "type": "booleanCondition"
+    },
+    "actions": [
+        {
+            "parameterValues": {
+                "mergeProfilePropertyValue": "eventProperty::properties(username)",
+                "mergeProfilePropertyName": "mergeIdentifier"
+            },
+            "type": "mergeProfilesOnPropertyAction"
+        },
+        {
+            "parameterValues": {
+                "setPropertyName": "properties(username)",
+                "setPropertyValue": "eventProperty::properties(username)",
+                "setPropertyStrategy": "alwaysSet"
+            },
+            "type": "setPropertyAction"
+        },
+        {
+            "parameterValues": {
+                "setPropertyName": "properties(firstName)",
+                "setPropertyValue": "eventProperty::properties(firstName)",
+                "setPropertyStrategy": "alwaysSet"
+            },
+            "type": "setPropertyAction"
+        },
+        {
+            "parameterValues": {
+                "setPropertyName": "properties(lastName)",
+                "setPropertyValue": "eventProperty::properties(lastName)",
+                "setPropertyStrategy": "alwaysSet"
+            },
+            "type": "setPropertyAction"
+        },
+        {
+            "parameterValues": {
+                "setPropertyName": "properties(email)",
+                "setPropertyValue": "eventProperty::properties(email)",
+                "setPropertyStrategy": "alwaysSet"
+            },
+            "type": "setPropertyAction"
+        }
+    ],
+    "linkedItems": null,
+    "raiseEventOnlyOnceForProfile": false,
+    "raiseEventOnlyOnceForSession": false,
+    "raiseEventOnlyOnce": false,
+    "priority": 0,
+    "metadata": {
+        "id": "setPropertyInfo",
+        "name": "Set Property Info",
+        "description": "Copy event properties to profile properties on login",
+        "scope": "ryr",
+        "tags": [],
+        "systemTags": [],
+        "enabled": true,
+        "missingPlugins": false,
+        "hidden": false,
+        "readOnly": false
+    }
+}

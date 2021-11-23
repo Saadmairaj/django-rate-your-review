@@ -1,0 +1,69 @@
+{
+	"itemId": "onIdentify",
+	"itemType": "rule",
+	"condition": {
+		"parameterValues": {
+			"subConditions": [
+				{
+					"parameterValues": {
+						"eventTypeId": "identify"
+					},
+					"type": "eventTypeCondition"
+				}
+			],
+			"operator": "and"
+		},
+		"type": "booleanCondition"
+	},
+	"actions": [
+		{
+			"parameterValues": {
+				"setPropertyName": "properties(username)",
+				"setPropertyValue": "eventProperty::target.properties(username)",
+				"setPropertyStrategy": "alwaysSet"
+			},
+			"type": "setPropertyAction"
+		},
+		{
+			"parameterValues": {
+				"setPropertyName": "properties(firstName)",
+				"setPropertyValue": "eventProperty::target.properties(firstName)",
+				"setPropertyStrategy": "alwaysSet"
+			},
+			"type": "setPropertyAction"
+		},
+		{
+			"parameterValues": {
+				"setPropertyName": "properties(lastName)",
+				"setPropertyValue": "eventProperty::target.properties(lastName)",
+				"setPropertyStrategy": "alwaysSet"
+			},
+			"type": "setPropertyAction"
+		},
+		{
+			"parameterValues": {
+				"setPropertyName": "properties(email)",
+				"setPropertyValue": "eventProperty::target.properties(email)",
+				"setPropertyStrategy": "alwaysSet"
+			},
+			"type": "setPropertyAction"
+		}
+	],
+	"linkedItems": null,
+	"raiseEventOnlyOnceForProfile": false,
+	"raiseEventOnlyOnceForSession": false,
+	"raiseEventOnlyOnce": false,
+	"priority": 0,
+	"metadata": {
+		"id": "onIdentify",
+		"name": "On Identify",
+		"description": "Copy event properties to profile properties on identification of the same email",
+		"scope": "ryr",
+		"tags": [],
+		"systemTags": [],
+		"enabled": true,
+		"missingPlugins": false,
+		"hidden": false,
+		"readOnly": false
+	}
+}
