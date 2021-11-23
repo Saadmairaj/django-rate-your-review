@@ -4,6 +4,17 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class Consent(models.Model):
+    CONSENT_CHOICES = (
+        ('DENY', 'DENY'),
+        ('GRANTED', 'GRANTED'),
+        ('REVOKE', 'REVOKE')
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=7, choices=CONSENT_CHOICES)
+
+
 class Review(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True)

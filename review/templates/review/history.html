@@ -6,19 +6,15 @@
 {% block title %}Histroy{% endblock %}
 {% block heading %}<h3>Review Histroy</h3>{% endblock %}
 {% block content %}
-    <script src="{% static "js/jquery.waypoints.min.js" %}"></script>
-    <script src="{% static "js/infinite.min.js" %}"></script>
-    <script>
-        var infinite = new Waypoint.Infinite({
-            element: $('.infinite-container')[0],
-            offset: 'bottom-in-view',
-        })
-    </script>
-    <style>
-        .nounderline {
-            text-decoration: none !important
+    <script type="text/javascript">
+        let once = true
+        window.onscroll = function(evt) {
+            if (once) {
+                unomiTracker.track('scroll', {title: document.title});
+                once = false
+            }
         }
-    </style>
+    </script>
     <div class="infinite-container">
         {% for review in reviews %}
             <div class="infinite-item">

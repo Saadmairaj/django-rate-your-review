@@ -1,19 +1,40 @@
-{% extends 'review/base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'review/base.html' %} {% load static %} {% load crispy_forms_tags %}
+{% block title %} Review {% endblock %} {% block heading %}
+<h3>Get a Rating</h3>
+{% endblock %} {% block content %}
 
-{% block title %}
-Review
-{% endblock %}
+<form action="" method="post" class="form-group" , id="review-form">
+  {% csrf_token %} {{ form|crispy }}
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-success">Save</button>
+  </div>
+</form>
 
-{% block heading %}
-    <h3>Get a Rating</h3>
-{% endblock %}
-{% block content %}
-    <form action="" method="post" class="form-group">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Save</button>
-        </div>
-    </form>
+<div class="container" id="consent-container" style="display: none">
+  <div class="navbar-inner navbar-content-center" id="consent-accept">
+    <p class="text-muted credit">
+      By using our website you are consenting to our use of cookies in
+      accordance with our <a href="">cookie policy</a>.
+    </p>
+    <button class="btn btn-link pull-right" id="close-consent">Close</button>
+    <button class="btn btn-link pull-right" id="accept-all-consent">
+      Accept all
+    </button>
+    <br />
+  </div>
+</div>
+
+{{ request.user.is_authenticated|json_script:"user-authenticate" }} 
+{{ request.user.consent.status|json_script:"user-consent-status" }}
+
+<script type="text/javascript" src="{% static "js/consent.js" %}"></script>
+<script type="text/javascript">
+  const form = document.getElementById("review-form");
+  const properties = {
+    title: form.title.value,
+    body: form.text.value,
+  };
+  unomiTracker.trackForm(form, "reviewSubmitted", properties);
+</script>
+
 {% endblock %}

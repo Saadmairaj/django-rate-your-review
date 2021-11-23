@@ -3,6 +3,7 @@ from review import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('', views.ReviewView.as_view(), name="home"),
@@ -11,10 +12,12 @@ urlpatterns = [
     path('logout', auth_views.LogoutView.as_view(
         template_name='review/logout.html'), name="logout"),
     path('login', auth_views.LoginView.as_view(
-        template_name='review/login.html', 
+        template_name='review/login.html',
         success_url="/home"), name="login"),
-    path('update-review/<int:pk>', views.EditReviewView.as_view(), name="update-review"),
+    path('update-review/<int:pk>',
+         views.EditReviewView.as_view(), name="update-review"),
     path("history", views.Histroy.as_view(), name="history"),
+    path('update_consent', csrf_exempt(views.update_consent))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

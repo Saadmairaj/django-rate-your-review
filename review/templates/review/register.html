@@ -1,19 +1,25 @@
-{% extends 'review/base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'review/base.html' %} {% load crispy_forms_tags %} {% load static %}
+{% block title %} Register {% endblock %} {% block heading %}
+<h3>User Registration</h3>
+{% endblock %} {% block content %}
+<form action="#" method="post" class="form-group" id="register-form">
+  {% csrf_token %} {{ form|crispy }}
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-success">Register</button>
+  </div>
+</form>
 
-{% block title %}
-Register
-{% endblock %}
+<script type="text/javascript">
+  var form = document.getElementById("register-form");
 
-{% block heading %}
-    <h3>User Registeration</h3>
-{% endblock %}
-{% block content %}
-    <form action="" method="post" class="form-group">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Register</button>
-        </div>
-    </form>
+  form.addEventListener("submit", function (evt) {
+    var properties = {
+      username: form.username.value,
+      firstName: form.first_name.value,
+      lastName: form.last_name.value,
+      email: form.email.value,
+    };
+    unomiTracker.track("register", properties);
+  });
+</script>
 {% endblock %}

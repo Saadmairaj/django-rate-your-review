@@ -1,13 +1,15 @@
-{% extends 'review/base.html' %}
-{% load crispy_forms_tags %}
+{% extends 'review/base.html' %} {% load crispy_forms_tags %} {% load static %}
+{% block title %} Logout {% endblock %} {% block heading %}
+<h3>Logged out</h3>
+{% endblock %} {% block content %}
+<p class="font-weight-light">
+  Thanks for spending some quality time with the Web site today
+</p>
 
-{% block title %}
-Logout
-{% endblock %}
-
-{% block heading %}
-    <h3>Logged out</h3>
-{% endblock %}
-{% block content %}
-    <p class="font-weight-light">Thanks for spending some quality time with the Web site today</p>
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+    var properties = { title: document.title };
+    unomiTracker.track("logOut", properties);
+  });
+</script>
 {% endblock %}

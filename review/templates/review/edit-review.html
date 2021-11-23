@@ -1,39 +1,42 @@
-{% extends 'review/base.html' %}
-{% load crispy_forms_tags %}
-
-{% block title %}
-Review
-{% endblock %}
-
-{% block heading %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h3>Your Review</h3>
-            </div>
-            <div class="col-md-auto">
-                {% for star in rating_star_loop %}
-                    {% if star %}
-                        <span class="fa fa-star checked"></span>
-                    {% else %}
-                        <span class="fa fa-star"></span>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class="col-md-auto">
-                <p>{{ current_review_rating }} / {{ rating_star_loop|length }}</p>
-            </div>
-        </div>
+{% extends 'review/base.html' %} {% load crispy_forms_tags %} {% block title %}
+Review {% endblock %} {% block heading %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h3>Your Review</h3>
     </div>
+    <div class="col-md-auto">
+      {% for star in rating_star_loop %} {% if star %}
+      <span class="fa fa-star checked"></span>
+      {% else %}
+      <span class="fa fa-star"></span>
+      {% endif %} {% endfor %}
+    </div>
+    <div class="col-md-auto">
+      <p>{{ current_review_rating }} / {{ rating_star_loop|length }}</p>
+    </div>
+  </div>
+</div>
 
-{% endblock %}
-{% block content %}
-     {% csrf_token %}
-    <form action="" method="post" class="form-group">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Save</button>
-        </div>
-    </form>
+{% endblock %} {% block content %} {% csrf_token %}
+<form action="" method="post" class="form-group" id="update-form">
+  {% csrf_token %} {{ form|crispy }}
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-success">Save</button>
+  </div>
+</form>
+
+{{ current_review_rating|json_script:"review-rating" }}
+<script type="text/javascript">
+  const form = document.getElementById("update-form");
+  const rating = JSON.parse(
+    document.getElementById("review-rating").textContent
+  );
+  var properties = {
+    rating,
+    title: form.title.value,
+    body: form.text.value,
+  };
+  unomiTracker.trackForm(form, "reviewUpdated", properties);
+</script>
 {% endblock %}

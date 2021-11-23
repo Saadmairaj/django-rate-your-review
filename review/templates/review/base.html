@@ -21,6 +21,7 @@
     <!-- Font Awesome Icon Library -->
     <link
       rel="stylesheet"
+      type="text/css"
       href="{% static "css/font-awesome.min.css" %}"
     />
     <style>
@@ -29,8 +30,36 @@
       }
     </style>
 
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="{%static "css/consent-popup.css"%}" 
+    />
+
     <title>{% block title %}Rate Your Review{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'images/ryr.png' %}" />
+    <script type="text/javascript" src="{% static "js/unomi.tracker.js" %}"></script>
+    {% if user.is_authenticated %}
+      {{ request.user.get_username|json_script:"user-username" }}
+      {{ request.user.email|json_script:"user-email" }}
+      {{ request.user.first_name|json_script:"user-first-name" }}
+      {{ request.user.last_name|json_script:"user-last-name" }}
+
+      <script type="text/javascript">
+        const username = JSON.parse(document.getElementById('user-username').textContent);
+        const email = JSON.parse(document.getElementById('user-email').textContent);
+        const firstName = JSON.parse(document.getElementById('user-first-name').textContent);
+        const lastName = JSON.parse(document.getElementById('user-last-name').textContent);
+
+        unomiTracker.identify(username, {
+          firstName,
+          lastName,
+          email,
+          username
+        });
+
+      </script>
+    {% endif %}
   </head>
 
   <body>
@@ -52,7 +81,6 @@
       src="{% static "js/bootstrap.min.js" %}"
       crossorigin="anonymous"
     ></script>
-
     <!-- Side navigation -->
     {% include 'review/navbar.html' %}
 
